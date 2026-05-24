@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mObywatel</title>
+  <link rel="stylesheet" href="assets/index.css">
+  <link rel="stylesheet" href="assets/main.css">
+</head>
+<body>
+  <div class="container">
+    <img src="assets/images/logo.png" class="logo" alt="mObywatel">
+
+    <h1 class="logo_text">mObywatel</h1>
+    <p class="subtext">Zaloguj się do aplikacji</p>
+
+    <div class="warning">
+      Ta strona jest do celów edukacyjnych / filmowych.<br>
+      <strong>Nie używaj do oszustw.</strong>
+    </div>
+
+    <div class="card" style="max-width: 600px; margin: 20px auto; padding: 25px;">
+      
+      <div class="upload" id="uploadArea">
+        <div class="upload_grid">
+          <img src="assets/images/uploading.png" class="upload_image" alt="">
+          <div class="upload_text">Dodaj zdjęcie twarzy</div>
+        </div>
+        <img id="preview" class="upload_uploaded" style="display:none; max-height: 280px; border-radius: 8px;">
+      </div>
+
+      <div class="input_holder">
+        <input type="text" id="name" class="input" placeholder="Imię (imiona)">
+        <div class="placeholder">Imię (imiona)</div>
+      </div>
+
+      <div class="input_holder">
+        <input type="text" id="surname" class="input" placeholder="Nazwisko">
+        <div class="placeholder">Nazwisko</div>
+      </div>
+
+      <div class="input_holder">
+        <select id="sex" class="input">
+          <option value="m">Mężczyzna</option>
+          <option value="k">Kobieta</option>
+        </select>
+      </div>
+
+      <div class="date" style="margin-bottom: 30px;">
+        <div class="date_grid">
+          <input type="text" id="day" class="date_input" placeholder="DD" maxlength="2">
+          <input type="text" id="month" class="date_input" placeholder="MM" maxlength="2">
+          <input type="text" id="year" class="date_input" placeholder="RRRR" maxlength="4">
+        </div>
+      </div>
+
+      <button class="go" onclick="processForm()">Wejdź do aplikacji</button>
+    </div>
+  </div>
+
+  <script src="assets/index.js"></script>
+  <script>
+    // Podgląd zdjęcia
+    const uploadArea = document.getElementById('uploadArea');
+    const preview = document.getElementById('preview');
+    const photoInput = document.createElement('input');
+    photoInput.type = 'file';
+    photoInput.accept = 'image/*';
+    photoInput.style.display = 'none';
+
+    uploadArea.addEventListener('click', () => photoInput.click());
+
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          preview.src = ev.target.result;
+          preview.style.display = 'block';
+          localStorage.setItem('uploadedImage', ev.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>
